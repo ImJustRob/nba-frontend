@@ -65,6 +65,14 @@ export default {
            console.log("players update error", error.response);
          });
      },
+     handleDestroyPlayer: function (player) {
+       axios.delete(`http://localhost:5000/nbas/${player.id}.json`).then((response) => {
+         console.log("players destroy", response);
+         var index = this.players.indexOf(player);
+         this.players.splice(index, 1);
+         this.handleClose();
+       });
+     },
      handleClose: function () {
        this.isPlayersShowVisible = false;
      },
@@ -77,7 +85,7 @@ export default {
     <PlayersNew v-on:createPlayer="handleCreatePlayer" />
      <PlayersIndex v-bind:players="players" v-on:showPlayer="handleShowPlayer" />
      <Modal v-bind:show="isPlayersShowVisible" v-on:close="handleClose">
-        <PlayersShow v-bind:player="currentPlayer" v-on:updatePlayer="handleUpdatePlayer" />
+        <PlayersShow v-bind:player="currentPlayer" v-on:updatePlayer="handleUpdatePlayer" v-on:destroyPlayer="handleDestroyPlayer" />
      </Modal>
   </main>
 </template>

@@ -45,6 +45,7 @@ export default {
        </div>
        <button type="submit">Update Player</button>
      </form>
+     <button v-on:click="$emit('destroyPlayer', player)">Destroy Player</button>
   </div>
 </template>
 

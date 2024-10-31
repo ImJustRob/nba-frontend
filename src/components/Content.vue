@@ -46,6 +46,25 @@ export default {
        this.currentPlayer = player;
        this.isPlayersShowVisible = true;
      },
+     handleUpdatePlayer: function (id, params) {
+       console.log("handleUpdatePlayer", id, params);
+       axios
+         .patch(`http://localhost:5000/nbas/${id}.json`, params)
+         .then((response) => {
+           console.log("players update", response);
+           this.players = this.players.map((player) => {
+             if (player.id === response.data.id) {
+               return response.data;
+             } else {
+               return player;
+             }
+           });
+           this.handleClose();
+         })
+         .catch((error) => {
+           console.log("players update error", error.response);
+         });
+     },
      handleClose: function () {
        this.isPlayersShowVisible = false;
      },
@@ -58,7 +77,7 @@ export default {
     <PlayersNew v-on:createPlayer="handleCreatePlayer" />
      <PlayersIndex v-bind:players="players" v-on:showPlayer="handleShowPlayer" />
      <Modal v-bind:show="isPlayersShowVisible" v-on:close="handleClose">
-        <PlayersShow v-bind:player="currentPlayer" />
+        <PlayersShow v-bind:player="currentPlayer" v-on:updatePlayer="handleUpdatePlayer" />
      </Modal>
   </main>
 </template>

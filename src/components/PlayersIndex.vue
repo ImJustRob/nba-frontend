@@ -14,6 +14,8 @@ export default {
        <img v-bind:src="player.image" />
        <p>Points Average: {{ player.points_avg }}</p>
        <p>Player: {{ player.player }}</p>
+       <button v-on:click="$emit('showPlayer', player)">Player info</button>
+
      </div>
   </div>
 </template>
